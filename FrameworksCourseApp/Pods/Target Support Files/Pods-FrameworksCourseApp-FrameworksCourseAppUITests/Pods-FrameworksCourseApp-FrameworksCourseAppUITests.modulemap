@@ -1,0 +1,6 @@
+framework module Pods_FrameworksCourseApp_FrameworksCourseAppUITests {
+  umbrella header "Pods-FrameworksCourseApp-FrameworksCourseAppUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
