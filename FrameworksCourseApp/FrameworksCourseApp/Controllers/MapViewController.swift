@@ -27,7 +27,7 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureMap()
+        configureMap(coordinates)
         configureLocationManager()
     }
     
@@ -58,22 +58,28 @@ class MapViewController: UIViewController {
         marker = nil
     }
     
-    func configureMap() {
-        let cameraPosition = GMSCameraPosition.camera(withTarget: coordinates, zoom: 17)
+    func configureMap(_ coordinate: CLLocationCoordinate2D) {
+        let cameraPosition = GMSCameraPosition.camera(withTarget: coordinate, zoom: 17)
         mapView.camera = cameraPosition
     }
     
     func configureLocationManager() {
+        
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.requestWhenInUseAuthorization()
     }
     
-    @IBAction func createMarkerButton(_ sender: Any) {
+    @IBAction func createMarkerButton(_ sender: UIButton) {
         coordinates = mapView.camera.target
         //    marker == nil ? addMarker(coordinates) : removeMarker()
         addMarker(.autoMarker, coordinates)
         
+    }
+    
+    
+    @IBAction func updateLocationButton(_ sender: UIButton) {
+        locationManager?.requestLocation()
     }
     
 }
@@ -82,11 +88,17 @@ extension MapViewController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         addMarker(.manualMarker, coordinate)
     }
+    
 }
 
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print(locations)
+        guard let location = locations.last else { return }
+        configureMap(location.coordinate)
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
     }
 }
 

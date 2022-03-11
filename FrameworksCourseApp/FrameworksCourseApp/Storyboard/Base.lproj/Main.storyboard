@@ -34,16 +34,32 @@
                                     <action selector="createMarkerButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sFc-EF-Nrl"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z4W-lc-4cl">
+                                <rect key="frame" x="20" y="811" width="130.5" height="31"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Update Location" cornerStyle="capsule">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="0.59020906689999997" green="0.72359067200000005" blue="0.82354456190000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="strokeColor" systemColor="labelColor"/>
+                                    </backgroundConfiguration>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="updateLocationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6bM-v7-EXc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="QlQ-Mi-i3S" secondAttribute="trailing" constant="20" id="3EH-TD-n4H"/>
+                            <constraint firstItem="z4W-lc-4cl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="CuE-Vm-mF9"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="YRY-8J-pp3" secondAttribute="trailing" id="EmD-me-Bky"/>
                             <constraint firstItem="YRY-8J-pp3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GiE-HG-KgR"/>
                             <constraint firstItem="YRY-8J-pp3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Jiu-AF-WSV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="QlQ-Mi-i3S" secondAttribute="bottom" constant="20" id="OdW-m1-fht"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="YRY-8J-pp3" secondAttribute="bottom" id="u5S-Yj-7Et"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="z4W-lc-4cl" secondAttribute="bottom" constant="20" id="vAB-HS-89S"/>
                         </constraints>
                     </view>
                     <connections>
