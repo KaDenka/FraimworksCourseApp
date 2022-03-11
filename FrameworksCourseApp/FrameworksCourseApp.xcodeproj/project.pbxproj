@@ -134,6 +134,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		CA00A58927DB7064008894E4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		CA8EA4E727D9D90900E23117 = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +166,7 @@
 		CA8EA4F227D9D90900E23117 /* FrameworksCourseApp */ = {
 			isa = PBXGroup;
 			children = (
+				CA00A58927DB7064008894E4 /* Extensions */,
 				CA00A58327DB37B1008894E4 /* App */,
 				CA00A58627DB37F2008894E4 /* Models */,
 				CA00A58427DB37C1008894E4 /* Controllers */,

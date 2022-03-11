@@ -7,6 +7,7 @@
 
 import UIKit
 import GoogleMaps
+import CoreLocation
 
 enum MarkerSelected {
     case autoMarker
@@ -19,12 +20,15 @@ class MapViewController: UIViewController {
     
     var marker: GMSMarker?
     var manualMarker: GMSMarker?
+    var locationManager: CLLocationManager?
+    var geoCoder: CLGeocoder?
     
     var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMap()
+        configureLocationManager()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +63,12 @@ class MapViewController: UIViewController {
         mapView.camera = cameraPosition
     }
     
+    func configureLocationManager() {
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.requestWhenInUseAuthorization()
+    }
+    
     @IBAction func createMarkerButton(_ sender: Any) {
         coordinates = mapView.camera.target
         //    marker == nil ? addMarker(coordinates) : removeMarker()
@@ -74,5 +84,9 @@ extension MapViewController: GMSMapViewDelegate {
     }
 }
 
-
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(locations)
+    }
+}
 
