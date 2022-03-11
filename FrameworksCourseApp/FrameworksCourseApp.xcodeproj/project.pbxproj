@@ -101,6 +101,39 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CA00A58327DB37B1008894E4 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				CA8EA4F327D9D90900E23117 /* AppDelegate.swift */,
+				CA8EA4F527D9D90900E23117 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		CA00A58427DB37C1008894E4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CA8EA4F727D9D90900E23117 /* MapViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CA00A58527DB37D8008894E4 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				CA8EA4F927D9D90900E23117 /* Main.storyboard */,
+				CA8EA4FE27D9D90B00E23117 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		CA00A58627DB37F2008894E4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		CA8EA4E727D9D90900E23117 = {
 			isa = PBXGroup;
 			children = (
@@ -126,12 +159,11 @@
 		CA8EA4F227D9D90900E23117 /* FrameworksCourseApp */ = {
 			isa = PBXGroup;
 			children = (
-				CA8EA4F327D9D90900E23117 /* AppDelegate.swift */,
-				CA8EA4F527D9D90900E23117 /* SceneDelegate.swift */,
-				CA8EA4F727D9D90900E23117 /* MapViewController.swift */,
-				CA8EA4F927D9D90900E23117 /* Main.storyboard */,
+				CA00A58327DB37B1008894E4 /* App */,
+				CA00A58627DB37F2008894E4 /* Models */,
+				CA00A58427DB37C1008894E4 /* Controllers */,
+				CA00A58527DB37D8008894E4 /* Storyboard */,
 				CA8EA4FC27D9D90B00E23117 /* Assets.xcassets */,
-				CA8EA4FE27D9D90B00E23117 /* LaunchScreen.storyboard */,
 				CA8EA50127D9D90B00E23117 /* Info.plist */,
 			);
 			path = FrameworksCourseApp;
@@ -164,7 +196,6 @@
 				85CA95BD4E5DF3EC1254BA66 /* Pods-FrameworksCourseAppTests.debug.xcconfig */,
 				856A09DE724E3205630B087C /* Pods-FrameworksCourseAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
