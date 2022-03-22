@@ -8,6 +8,7 @@
 import UIKit
 import GoogleMaps
 import CoreLocation
+import RealmSwift
 
 enum MarkerSelected {
     case autoMarker
@@ -26,8 +27,8 @@ class MapViewController: UIViewController {
     var route: GMSPolyline?
     var routePath: GMSMutablePath?
     var startFlag = false
-    
     var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
+    let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,6 +133,7 @@ class MapViewController: UIViewController {
         locationManager.stopUpdatingLocation()
         route?.map = nil
         startFlag = false
+        
         
         guard let routePoints = routePath else { return }
         for element in 0 ... (routePoints.count() - 1) {
