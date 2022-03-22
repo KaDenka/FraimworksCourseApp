@@ -132,10 +132,23 @@ class MapViewController: UIViewController {
         locationManager.stopUpdatingLocation()
         route?.map = nil
         startFlag = false
+        
+        guard let routePoints = routePath else { return }
+        for element in 0 ... (routePoints.count() - 1) {
+            print(routePoints.coordinate(at: element).longitude)
+        }
+        routePath?.removeAllCoordinates()
     }
     
     @IBAction func didTapLoadLastRouteButton(_ sender: UIButton) {
         if startFlag == true {
+            let alert = UIAlertController(title: "Warning!", message: "The route is making now. If you'll press OK all data of this route will be lost", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                self.locationManager.stopUpdatingLocation()
+                self.route?.map = nil
+                self.startFlag = false
+            }))
+            self.present(alert, animated: true, completion: nil)
             
         } else {
             
