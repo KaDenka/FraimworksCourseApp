@@ -23,14 +23,15 @@ class MapViewController: UIViewController {
     var locationManager = CLLocationManager()
     var geoCoder: CLGeocoder?
     var locationsArray = [CLLocationCoordinate2D]()
-    let mapPath = GMSMutablePath()
+    var route: GMSPolyline?
+    var routePath: GMSMutablePath?
     
-   // var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
+    var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureMap(locationManager.location!.coordinate)
-       // configureLocationManager()
+        configureMap(locationManager.location?.coordinate ?? coordinates)
+        // configureLocationManager()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,24 +70,29 @@ class MapViewController: UIViewController {
         mapView.camera = cameraPosition
         mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
+        
     }
     
     func configureLocationManager() {
         
         //locationManager = CLLocationManager()
         locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.startMonitoringSignificantLocationChanges()
+        locationManager.pausesLocationUpdatesAutomatically = false
     }
     
     func makeMapPath(_ points: [CLLocationCoordinate2D]) {
+        let routePath = GMSMutablePath()
         points.forEach { coordinate in
-            mapPath.add(coordinate)
+            routePath.add(coordinate)
         }
-        let polyline = GMSPolyline(path: mapPath)
-        polyline.strokeWidth = 5.0
-        polyline.strokeColor = .systemCyan
-        polyline.geodesic = true
-        polyline.map = mapView
+        let route = GMSPolyline(path: routePath)
+        route.strokeWidth = 5.0
+        route.strokeColor = .systemCyan
+        route.geodesic = true
+        route.map = mapView
     }
     
     @IBAction func createMarkerButton(_ sender: Any) {
@@ -116,15 +122,21 @@ extension MapViewController: CLLocationManagerDelegate {
         //print(locations)
         
         guard let location = locations.last else { return }
-//        if geoCoder == nil {
-//            geoCoder = CLGeocoder()
-//        }
-//        geoCoder?.reverseGeocodeLocation(location) { places, error in
-//            print(places?.first)
-//        }
+        
+        routePath?.add(location.coordinate)
+        route?.path = routePath
+        
+        let position = GMSCameraPosition(target: location.coordinate, zoom: 17)
+        mapView.animate(to: position)
+        //        if geoCoder == nil {
+        //            geoCoder = CLGeocoder()
+        //        }
+        //        geoCoder?.reverseGeocodeLocation(location) { places, error in
+        //            print(places?.first)
+        //        }
         
         //configureMap(location.coordinate)
-        mapView.camera = GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 17)
+        //        mapView.camera = GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 17)
         
         
     }
