@@ -89,10 +89,14 @@ class MapViewController: UIViewController {
             routePath.add(coordinate)
         }
         let route = GMSPolyline(path: routePath)
+        configureRouteLine(route)
+        route.map = mapView
+    }
+    
+    func configureRouteLine(_ route: GMSPolyline) {
         route.strokeWidth = 5.0
         route.strokeColor = .systemCyan
         route.geodesic = true
-        route.map = mapView
     }
     
     @IBAction func createMarkerButton(_ sender: Any) {
@@ -100,12 +104,19 @@ class MapViewController: UIViewController {
         
         //    marker == nil ? addMarker(coordinates) : removeMarker()
         addMarker(.autoMarker, coordinate)
+        //locationManager.stopUpdatingLocation()
         
     }
     
     
     @IBAction func updateLocationButton(_ sender: Any) {
         locationManager.requestLocation()
+        route?.map = nil
+        route = GMSPolyline()
+        configureRouteLine(route!)
+        routePath = GMSMutablePath()
+        route?.map = mapView
+        locationManager.startUpdatingLocation()
     }
     
 }
