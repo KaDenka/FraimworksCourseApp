@@ -25,6 +25,7 @@ class MapViewController: UIViewController {
     var locationsArray = [CLLocationCoordinate2D]()
     var route: GMSPolyline?
     var routePath: GMSMutablePath?
+    var startFlag = false
     
     var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
     
@@ -49,7 +50,7 @@ class MapViewController: UIViewController {
             marker?.snippet = "Actual selected auto marker"
             marker?.map = mapView
             locationsArray.append(coordinate)
-            makeMapPath(locationsArray)
+            //makeMapPath(locationsArray)
             
         case .manualMarker:
             manualMarker = GMSMarker(position: coordinate)
@@ -110,6 +111,13 @@ class MapViewController: UIViewController {
     
     
     @IBAction func updateLocationButton(_ sender: Any) {
+        //locationManager.requestLocation()
+        mapView.camera = GMSCameraPosition(target: locationManager.location!.coordinate, zoom: 17)
+        
+    }
+    
+    
+    @IBAction func didTapStartRouteButton(_ sender: UIButton) {
         locationManager.requestLocation()
         route?.map = nil
         route = GMSPolyline()
@@ -117,7 +125,26 @@ class MapViewController: UIViewController {
         routePath = GMSMutablePath()
         route?.map = mapView
         locationManager.startUpdatingLocation()
+        startFlag = true
     }
+    
+    @IBAction func didTapStopRouteButton(_ sender: UIButton) {
+        locationManager.stopUpdatingLocation()
+        route?.map = nil
+        startFlag = false
+    }
+    
+    @IBAction func didTapLoadLastRouteButton(_ sender: UIButton) {
+        if startFlag == true {
+            
+        } else {
+            
+        }
+    }
+    
+    
+    
+    
     
 }
 
@@ -139,6 +166,10 @@ extension MapViewController: CLLocationManagerDelegate {
         
         let position = GMSCameraPosition(target: location.coordinate, zoom: 17)
         mapView.animate(to: position)
+        
+        
+        
+        
         //        if geoCoder == nil {
         //            geoCoder = CLGeocoder()
         //        }
@@ -148,7 +179,6 @@ extension MapViewController: CLLocationManagerDelegate {
         
         //configureMap(location.coordinate)
         //        mapView.camera = GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 17)
-        
         
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
