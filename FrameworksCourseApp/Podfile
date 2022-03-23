@@ -8,6 +8,7 @@ target 'FrameworksCourseApp' do
   # Pods for FrameworksCourseApp
 
   pod 'GoogleMaps'
+  pod 'RealmSwift'
 
   target 'FrameworksCourseAppTests' do
     inherit! :search_paths

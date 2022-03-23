@@ -18,6 +18,7 @@
 		CA8EA50B27D9D90B00E23117 /* FrameworksCourseAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA50A27D9D90B00E23117 /* FrameworksCourseAppTests.swift */; };
 		CA8EA51527D9D90B00E23117 /* FrameworksCourseAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA51427D9D90B00E23117 /* FrameworksCourseAppUITests.swift */; };
 		CA8EA51727D9D90B00E23117 /* FrameworksCourseAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA51627D9D90B00E23117 /* FrameworksCourseAppUITestsLaunchTests.swift */; };
+		CAE6143627EAFA7A00D9F529 /* LastRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6143527EAFA7A00D9F529 /* LastRoutePoint.swift */; };
 		FDC7A51D4E181EED83DCAD38 /* Pods_FrameworksCourseApp_FrameworksCourseAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2727ADFD1683EE6AF222582 /* Pods_FrameworksCourseApp_FrameworksCourseAppUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		CA8EA51027D9D90B00E23117 /* FrameworksCourseAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FrameworksCourseAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA8EA51427D9D90B00E23117 /* FrameworksCourseAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworksCourseAppUITests.swift; sourceTree = "<group>"; };
 		CA8EA51627D9D90B00E23117 /* FrameworksCourseAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworksCourseAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CAE6143527EAFA7A00D9F529 /* LastRoutePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastRoutePoint.swift; sourceTree = "<group>"; };
 		F3CF2A5D27B7F2DC0EB822E6 /* Pods_FrameworksCourseApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FrameworksCourseApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -130,6 +132,7 @@
 		CA00A58627DB37F2008894E4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CAE6143527EAFA7A00D9F529 /* LastRoutePoint.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 				CA8EA4ED27D9D90900E23117 /* Frameworks */,
 				CA8EA4EE27D9D90900E23117 /* Resources */,
 				FA862FCB3F4E27649547D215 /* [CP] Copy Pods Resources */,
+				B8151A4A6985BF634428D56D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -257,6 +261,7 @@
 				CA8EA50D27D9D90B00E23117 /* Frameworks */,
 				CA8EA50E27D9D90B00E23117 /* Resources */,
 				26A09C0BF2BC06AE37B97A7E /* [CP] Copy Pods Resources */,
+				23FB541D5023914C29766EC7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -339,6 +344,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		23FB541D5023914C29766EC7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FrameworksCourseApp-FrameworksCourseAppUITests/Pods-FrameworksCourseApp-FrameworksCourseAppUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FrameworksCourseApp-FrameworksCourseAppUITests/Pods-FrameworksCourseApp-FrameworksCourseAppUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FrameworksCourseApp-FrameworksCourseAppUITests/Pods-FrameworksCourseApp-FrameworksCourseAppUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		26A09C0BF2BC06AE37B97A7E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -400,6 +422,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B8151A4A6985BF634428D56D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FrameworksCourseApp/Pods-FrameworksCourseApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FrameworksCourseApp/Pods-FrameworksCourseApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FrameworksCourseApp/Pods-FrameworksCourseApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BE2343DAFD0F494FEFEEE9F5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -449,6 +488,7 @@
 				CA8EA4F827D9D90900E23117 /* MapViewController.swift in Sources */,
 				CA8EA4F427D9D90900E23117 /* AppDelegate.swift in Sources */,
 				CA8EA4F627D9D90900E23117 /* SceneDelegate.swift in Sources */,
+				CAE6143627EAFA7A00D9F529 /* LastRoutePoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,6 +671,7 @@
 				DEVELOPMENT_TEAM = WBQRF7BRYB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FrameworksCourseApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Nedd to accept the geolocation setup!";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -660,6 +701,7 @@
 				DEVELOPMENT_TEAM = WBQRF7BRYB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FrameworksCourseApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Nedd to accept the geolocation setup!";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

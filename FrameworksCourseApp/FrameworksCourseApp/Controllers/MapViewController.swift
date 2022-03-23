@@ -8,6 +8,7 @@
 import UIKit
 import GoogleMaps
 import CoreLocation
+import RealmSwift
 
 enum MarkerSelected {
     case autoMarker
@@ -23,14 +24,17 @@ class MapViewController: UIViewController {
     var locationManager = CLLocationManager()
     var geoCoder: CLGeocoder?
     var locationsArray = [CLLocationCoordinate2D]()
-    let mapPath = GMSMutablePath()
-    
-   // var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
+    var route: GMSPolyline?
+    var routePath: GMSMutablePath?
+    var startFlag = false
+    var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
+    let realm = try! Realm()
+    var realmRoutePoints: Results<LastRoutePoint>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureMap(locationManager.location!.coordinate)
-       // configureLocationManager()
+        configureMap(locationManager.location?.coordinate ?? coordinates)
+        // configureLocationManager()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,7 +52,7 @@ class MapViewController: UIViewController {
             marker?.snippet = "Actual selected auto marker"
             marker?.map = mapView
             locationsArray.append(coordinate)
-            makeMapPath(locationsArray)
+            //makeMapPath(locationsArray)
             
         case .manualMarker:
             manualMarker = GMSMarker(position: coordinate)
@@ -69,24 +73,58 @@ class MapViewController: UIViewController {
         mapView.camera = cameraPosition
         mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
+        
     }
     
     func configureLocationManager() {
         
         //locationManager = CLLocationManager()
         locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.startMonitoringSignificantLocationChanges()
+        locationManager.pausesLocationUpdatesAutomatically = false
     }
     
     func makeMapPath(_ points: [CLLocationCoordinate2D]) {
+        let routePath = GMSMutablePath()
         points.forEach { coordinate in
-            mapPath.add(coordinate)
+            routePath.add(coordinate)
         }
-        let polyline = GMSPolyline(path: mapPath)
-        polyline.strokeWidth = 5.0
-        polyline.strokeColor = .systemCyan
-        polyline.geodesic = true
-        polyline.map = mapView
+        let route = GMSPolyline(path: routePath)
+        configureRouteLine(route)
+        route.map = mapView
+    }
+    
+    func configureRouteLine(_ route: GMSPolyline) {
+        route.strokeWidth = 5.0
+        route.strokeColor = .systemCyan
+        route.geodesic = true
+    }
+    
+    func showLastRoute() {
+        realmRoutePoints = realm.objects(LastRoutePoint.self)
+        guard realmRoutePoints != nil else {
+            let alert = UIAlertController(title: "Warning!", message: "There is not any route in base", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            return  self.present(alert, animated: true, completion: nil)
+        }
+        routePath = GMSMutablePath()
+        route = GMSPolyline()
+        for point in realmRoutePoints {
+            routePath!.add(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
+        }
+        self.route!.path = routePath
+        self.route!.strokeColor = .systemRed
+        self.route!.strokeWidth = 5.0
+        self.route!.geodesic = true
+        route!.map = mapView
+        guard let firstPoint = (route?.path?.coordinate(at: 0)), let lastPoint = route?.path?.coordinate(at: ((routePath?.count())!) - 1) else { return }
+        addMarker(.autoMarker, firstPoint)
+        addMarker(.autoMarker, lastPoint)
+        let bounds = GMSCoordinateBounds(coordinate: firstPoint, coordinate: lastPoint)
+        let camera = mapView.camera(for: bounds, insets: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100))!
+        mapView.camera = camera
     }
     
     @IBAction func createMarkerButton(_ sender: Any) {
@@ -94,13 +132,67 @@ class MapViewController: UIViewController {
         
         //    marker == nil ? addMarker(coordinates) : removeMarker()
         addMarker(.autoMarker, coordinate)
+        //locationManager.stopUpdatingLocation()
         
     }
     
     
     @IBAction func updateLocationButton(_ sender: Any) {
-        locationManager.requestLocation()
+        //locationManager.requestLocation()
+        mapView.camera = GMSCameraPosition(target: locationManager.location!.coordinate, zoom: 17)
+        
     }
+    
+    
+    @IBAction func didTapStartRouteButton(_ sender: UIButton) {
+        locationManager.requestLocation()
+        route?.map = nil
+        removeMarker()
+        route = GMSPolyline()
+        configureRouteLine(route!)
+        routePath = GMSMutablePath()
+        route?.map = mapView
+        locationManager.startUpdatingLocation()
+        startFlag = true
+    }
+    
+    @IBAction func didTapStopRouteButton(_ sender: UIButton) {
+        locationManager.stopUpdatingLocation()
+        route?.map = nil
+        startFlag = false
+        guard let routePoints = routePath else { return }
+        try! realm.write{
+            realm.deleteAll()
+        }
+        for element in 0 ... (routePoints.count() - 1) {
+            let routePoint = LastRoutePoint()
+            routePoint.latitude = routePoints.coordinate(at: element).latitude
+            routePoint.longitude = routePoints.coordinate(at: element).longitude
+            try! realm.write {
+                realm.add(routePoint)
+            }
+        }
+        routePath?.removeAllCoordinates()
+    }
+    
+    @IBAction func didTapLoadLastRouteButton(_ sender: UIButton) {
+        if startFlag == true {
+            let alert = UIAlertController(title: "Warning!", message: "The route is making now. If you'll press OK all data of this route will be lost", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                self.locationManager.stopUpdatingLocation()
+                self.route?.map = nil
+                self.startFlag = false
+                self.showLastRoute()
+            }))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            showLastRoute()
+        }
+    }
+    
+    
+    
+    
     
 }
 
@@ -116,16 +208,25 @@ extension MapViewController: CLLocationManagerDelegate {
         //print(locations)
         
         guard let location = locations.last else { return }
-//        if geoCoder == nil {
-//            geoCoder = CLGeocoder()
-//        }
-//        geoCoder?.reverseGeocodeLocation(location) { places, error in
-//            print(places?.first)
-//        }
+        
+        routePath?.add(location.coordinate)
+        route?.path = routePath
+        
+        let position = GMSCameraPosition(target: location.coordinate, zoom: 17)
+        mapView.animate(to: position)
+        
+        
+        
+        
+        //        if geoCoder == nil {
+        //            geoCoder = CLGeocoder()
+        //        }
+        //        geoCoder?.reverseGeocodeLocation(location) { places, error in
+        //            print(places?.first)
+        //        }
         
         //configureMap(location.coordinate)
-        mapView.camera = GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 17)
-        
+        //        mapView.camera = GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 17)
         
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
