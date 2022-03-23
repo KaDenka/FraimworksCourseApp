@@ -119,7 +119,12 @@ class MapViewController: UIViewController {
         self.route!.strokeWidth = 5.0
         self.route!.geodesic = true
         route!.map = mapView
-        
+        guard let firstPoint = (route?.path?.coordinate(at: 0)), let lastPoint = route?.path?.coordinate(at: ((routePath?.count())!) - 1) else { return }
+        addMarker(.autoMarker, firstPoint)
+        addMarker(.autoMarker, lastPoint)
+        let bounds = GMSCoordinateBounds(coordinate: firstPoint, coordinate: lastPoint)
+        let camera = mapView.camera(for: bounds, insets: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100))!
+        mapView.camera = camera
     }
     
     @IBAction func createMarkerButton(_ sender: Any) {
@@ -142,6 +147,7 @@ class MapViewController: UIViewController {
     @IBAction func didTapStartRouteButton(_ sender: UIButton) {
         locationManager.requestLocation()
         route?.map = nil
+        removeMarker()
         route = GMSPolyline()
         configureRouteLine(route!)
         routePath = GMSMutablePath()
