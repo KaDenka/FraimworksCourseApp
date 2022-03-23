@@ -29,6 +29,7 @@ class MapViewController: UIViewController {
     var startFlag = false
     var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
     let realm = try! Realm()
+    var realmRoutePoints: Results<LastRoutePoint>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,6 +102,26 @@ class MapViewController: UIViewController {
         route.geodesic = true
     }
     
+    func showLastRoute() {
+        realmRoutePoints = realm.objects(LastRoutePoint.self)
+        guard realmRoutePoints != nil else {
+            let alert = UIAlertController(title: "Warning!", message: "There is not any route in base", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            return  self.present(alert, animated: true, completion: nil)
+        }
+        routePath = GMSMutablePath()
+        route = GMSPolyline()
+        for point in realmRoutePoints {
+            routePath!.add(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
+        }
+        self.route!.path = routePath
+        self.route!.strokeColor = .systemRed
+        self.route!.strokeWidth = 5.0
+        self.route!.geodesic = true
+        route!.map = mapView
+        
+    }
+    
     @IBAction func createMarkerButton(_ sender: Any) {
         guard let coordinate = locationManager.location?.coordinate else { return }
         
@@ -133,11 +154,17 @@ class MapViewController: UIViewController {
         locationManager.stopUpdatingLocation()
         route?.map = nil
         startFlag = false
-        
-        
         guard let routePoints = routePath else { return }
+        try! realm.write{
+            realm.deleteAll()
+        }
         for element in 0 ... (routePoints.count() - 1) {
-            print(routePoints.coordinate(at: element).longitude)
+            let routePoint = LastRoutePoint()
+            routePoint.latitude = routePoints.coordinate(at: element).latitude
+            routePoint.longitude = routePoints.coordinate(at: element).longitude
+            try! realm.write {
+                realm.add(routePoint)
+            }
         }
         routePath?.removeAllCoordinates()
     }
@@ -149,11 +176,11 @@ class MapViewController: UIViewController {
                 self.locationManager.stopUpdatingLocation()
                 self.route?.map = nil
                 self.startFlag = false
+                self.showLastRoute()
             }))
             self.present(alert, animated: true, completion: nil)
-            
         } else {
-            
+            showLastRoute()
         }
     }
     
