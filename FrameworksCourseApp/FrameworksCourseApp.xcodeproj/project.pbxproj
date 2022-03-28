@@ -20,6 +20,7 @@
 		CA8EA51727D9D90B00E23117 /* FrameworksCourseAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA51627D9D90B00E23117 /* FrameworksCourseAppUITestsLaunchTests.swift */; };
 		CAE6143627EAFA7A00D9F529 /* LastRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6143527EAFA7A00D9F529 /* LastRoutePoint.swift */; };
 		CAE6F4A827F1A72D000198DB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F4A727F1A72D000198DB /* User.swift */; };
+		CAE6F4AA27F1C2A1000198DB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F4A927F1C2A1000198DB /* LoginViewController.swift */; };
 		FDC7A51D4E181EED83DCAD38 /* Pods_FrameworksCourseApp_FrameworksCourseAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2727ADFD1683EE6AF222582 /* Pods_FrameworksCourseApp_FrameworksCourseAppUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		CA8EA51627D9D90B00E23117 /* FrameworksCourseAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworksCourseAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CAE6143527EAFA7A00D9F529 /* LastRoutePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastRoutePoint.swift; sourceTree = "<group>"; };
 		CAE6F4A727F1A72D000198DB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CAE6F4A927F1C2A1000198DB /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F3CF2A5D27B7F2DC0EB822E6 /* Pods_FrameworksCourseApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FrameworksCourseApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				CA8EA4F727D9D90900E23117 /* MapViewController.swift */,
+				CAE6F4A927F1C2A1000198DB /* LoginViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAE6F4AA27F1C2A1000198DB /* LoginViewController.swift in Sources */,
 				CA8EA4F827D9D90900E23117 /* MapViewController.swift in Sources */,
 				CA8EA4F427D9D90900E23117 /* AppDelegate.swift in Sources */,
 				CA8EA4F627D9D90900E23117 /* SceneDelegate.swift in Sources */,

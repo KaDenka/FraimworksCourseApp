@@ -9,15 +9,10 @@ import Foundation
 import RealmSwift
 
 class User: Object {
-    @objc dynamic let login: String
-    @objc dynamic var password: String
+    @objc dynamic var login: String = ""
+    @objc dynamic var password: String = ""
     
-    init(login: String, password: String) {
-        self.login = login
-        self.password = password
-    }
-    
-    func primaryKey() {
-        
+    override static func primaryKey() -> String? {
+        return "login"
     }
 }
