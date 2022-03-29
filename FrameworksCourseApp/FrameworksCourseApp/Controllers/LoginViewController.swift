@@ -88,6 +88,7 @@ class LoginViewController: UIViewController {
             user.password = password
             
             //Need add realm checking
+            
             realm.beginWrite()
             try! realm.write {
                 realm.add(user)

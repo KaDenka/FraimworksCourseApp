@@ -163,12 +163,10 @@ class MapViewController: UIViewController {
         route?.map = nil
         startFlag = false
         guard let routePoints = routePath else { return }
-        
-        if realmRoutePoints != nil {
         try! realm.write{
-            realm.delete(realmRoutePoints)
+            realm.deleteAll()
         }
-        }
+        
         for element in 0 ... (routePoints.count() - 1) {
             let routePoint = LastRoutePoint()
             routePoint.latitude = routePoints.coordinate(at: element).latitude
