@@ -9,6 +9,7 @@ import UIKit
 import GoogleMaps
 import CoreLocation
 import RealmSwift
+import Realm
 
 enum MarkerSelected {
     case autoMarker
@@ -35,6 +36,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         configureMap(locationManager.location?.coordinate ?? coordinates)
         // configureLocationManager()
+       // print("REALM REALM REALM: \(String(describing: Realm.Configuration.defaultConfiguration.fileURL?.path))")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -161,17 +163,22 @@ class MapViewController: UIViewController {
         route?.map = nil
         startFlag = false
         guard let routePoints = routePath else { return }
+        
+        if realmRoutePoints != nil {
         try! realm.write{
-            realm.deleteAll()
+            realm.delete(realmRoutePoints)
+        }
         }
         for element in 0 ... (routePoints.count() - 1) {
             let routePoint = LastRoutePoint()
             routePoint.latitude = routePoints.coordinate(at: element).latitude
             routePoint.longitude = routePoints.coordinate(at: element).longitude
+            
             try! realm.write {
                 realm.add(routePoint)
             }
         }
+        
         routePath?.removeAllCoordinates()
     }
     

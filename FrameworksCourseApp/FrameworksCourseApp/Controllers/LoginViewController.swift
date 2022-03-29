@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 class LoginViewController: UIViewController {
-
+    
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -18,11 +18,15 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     
     var router: LaunchRouter?
+    var realmUsers: Results<User>?
+    var user = User()
     let realm = try! Realm()
+    
     
     override func viewWillAppear(_ animated: Bool) {
         
         router = LaunchRouter(viewController: self)
+        realmUsers = realm.objects(User.self)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(screenTapped))
         contentView.addGestureRecognizer(tapGesture)
@@ -49,7 +53,7 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func checkTextFields() {
+    private func loginButtonTapped() {
         guard let login = loginTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         
@@ -58,7 +62,37 @@ class LoginViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Ok", style: .default))
             self.present(alert, animated: true)// Alert fill login
         } else {
-            //check realm
+            user.login = login
+            user.password = password
+            
+            //Need check realm
+            
+            for realmUser in realmUsers! {
+                print(realmUser)
+            }
+            router?.toMapViewController()
+            
+        }
+    }
+    
+    private func registrationButtonTapped() {
+        guard let login = loginTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        if login.isEmpty || password.isEmpty {
+            let alert = UIAlertController(title: "Personal login and password required", message: "Please input the personal login and password", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+            self.present(alert, animated: true)// Alert fill login
+        } else {
+            user.login = login
+            user.password = password
+            
+            //Need add realm checking
+            realm.beginWrite()
+            try! realm.write {
+                realm.add(user)
+            }
+            realm.cancelWrite()
             router?.toMapViewController()
         }
     }
@@ -81,12 +115,12 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         keyboardHidden()
-        checkTextFields()
+        loginButtonTapped()
     }
     @IBAction func registrationButtonTapped(_ sender: UIButton) {
         keyboardHidden()
-        router?.toMapViewController()
+        registrationButtonTapped()
     }
     
-
+    
 }
