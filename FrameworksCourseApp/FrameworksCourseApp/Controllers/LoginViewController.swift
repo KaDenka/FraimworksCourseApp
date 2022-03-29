@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class LoginViewController: UIViewController {
 
@@ -16,9 +17,16 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     
+    var router: LaunchRouter?
+    let realm = try! Realm()
+    
     override func viewWillAppear(_ animated: Bool) {
+        
+        router = LaunchRouter(viewController: self)
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(screenTapped))
         contentView.addGestureRecognizer(tapGesture)
+        
         
     }
     
@@ -41,6 +49,20 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    private func checkTextFields() {
+        guard let login = loginTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        if login.isEmpty || password.isEmpty {
+            let alert = UIAlertController(title: "Personal login and password required", message: "Please input the personal login and password", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+            self.present(alert, animated: true)// Alert fill login
+        } else {
+            //check realm
+            router?.toMapViewController()
+        }
+    }
+    
     
     @objc private func keyboardShown(_ notification: Notification) {
         let userInfo = notification.userInfo
@@ -59,10 +81,11 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         keyboardHidden()
-        
+        checkTextFields()
     }
     @IBAction func registrationButtonTapped(_ sender: UIButton) {
         keyboardHidden()
+        router?.toMapViewController()
     }
     
 

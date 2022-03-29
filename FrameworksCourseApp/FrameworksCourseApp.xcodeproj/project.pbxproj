@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4220BEBC1442308820DCEF2E /* Pods_FrameworksCourseApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3CF2A5D27B7F2DC0EB822E6 /* Pods_FrameworksCourseApp.framework */; };
 		6A6556AD91D88B513D724DF5 /* Pods_FrameworksCourseAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F0C17FFC863B7BEB14E8308 /* Pods_FrameworksCourseAppTests.framework */; };
+		CA45070527F3011100DD760F /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA45070427F3011100DD760F /* Router.swift */; };
+		CA45070727F303A900DD760F /* LaunchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA45070627F303A900DD760F /* LaunchRouter.swift */; };
 		CA8EA4F427D9D90900E23117 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA4F327D9D90900E23117 /* AppDelegate.swift */; };
 		CA8EA4F627D9D90900E23117 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA4F527D9D90900E23117 /* SceneDelegate.swift */; };
 		CA8EA4F827D9D90900E23117 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA4F727D9D90900E23117 /* MapViewController.swift */; };
@@ -50,6 +52,8 @@
 		85CA95BD4E5DF3EC1254BA66 /* Pods-FrameworksCourseAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FrameworksCourseAppTests.debug.xcconfig"; path = "Target Support Files/Pods-FrameworksCourseAppTests/Pods-FrameworksCourseAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B2727ADFD1683EE6AF222582 /* Pods_FrameworksCourseApp_FrameworksCourseAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FrameworksCourseApp_FrameworksCourseAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B38F0832056F9AA12DEF354C /* Pods-FrameworksCourseApp-FrameworksCourseAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FrameworksCourseApp-FrameworksCourseAppUITests.release.xcconfig"; path = "Target Support Files/Pods-FrameworksCourseApp-FrameworksCourseAppUITests/Pods-FrameworksCourseApp-FrameworksCourseAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		CA45070427F3011100DD760F /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		CA45070627F303A900DD760F /* LaunchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchRouter.swift; sourceTree = "<group>"; };
 		CA8EA4F027D9D90900E23117 /* FrameworksCourseApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrameworksCourseApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA8EA4F327D9D90900E23117 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA8EA4F527D9D90900E23117 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +154,23 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		CA45070227F300F500DD760F /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				CA45070327F3010000DD760F /* Router */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		CA45070327F3010000DD760F /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				CA45070427F3011100DD760F /* Router.swift */,
+				CA45070627F303A900DD760F /* LaunchRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
 		CA8EA4E727D9D90900E23117 = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +196,7 @@
 		CA8EA4F227D9D90900E23117 /* FrameworksCourseApp */ = {
 			isa = PBXGroup;
 			children = (
+				CA45070227F300F500DD760F /* Navigation */,
 				CA00A58927DB7064008894E4 /* Extensions */,
 				CA00A58327DB37B1008894E4 /* App */,
 				CA00A58627DB37F2008894E4 /* Models */,
@@ -492,6 +514,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAE6F4AA27F1C2A1000198DB /* LoginViewController.swift in Sources */,
+				CA45070727F303A900DD760F /* LaunchRouter.swift in Sources */,
+				CA45070527F3011100DD760F /* Router.swift in Sources */,
 				CA8EA4F827D9D90900E23117 /* MapViewController.swift in Sources */,
 				CA8EA4F427D9D90900E23117 /* AppDelegate.swift in Sources */,
 				CA8EA4F627D9D90900E23117 /* SceneDelegate.swift in Sources */,

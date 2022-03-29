@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k72-Zd-Dvu">
-                                <rect key="frame" x="0.0" y="44" width="414" height="1200"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k72-Zd-Dvu">
+                                <rect key="frame" x="0.0" y="44" width="414" height="1122"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRd-4s-roZ" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="406" height="1200"/>
@@ -106,6 +106,7 @@
                         <outlet property="passwordButton" destination="1ey-KV-mzg" id="8Ql-hK-96F"/>
                         <outlet property="passwordTextField" destination="N86-cV-PXl" id="LoQ-x9-Rhz"/>
                         <outlet property="scrollView" destination="k72-Zd-Dvu" id="upb-ML-KVa"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="toMapViewController" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="yq3-3S-YKA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DXc-9p-Ggj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -214,6 +215,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="z4W-lc-4cl" secondAttribute="bottom" constant="20" id="vAB-HS-89S"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="03H-Ye-yIh"/>
                     <connections>
                         <outlet property="mapView" destination="YRY-8J-pp3" id="ltX-EM-c0D"/>
                     </connections>
