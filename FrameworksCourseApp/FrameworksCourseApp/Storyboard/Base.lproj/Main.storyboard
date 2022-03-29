@@ -100,10 +100,12 @@
                     </view>
                     <size key="freeformSize" width="414" height="1200"/>
                     <connections>
+                        <outlet property="contentView" destination="bRd-4s-roZ" id="SXW-Xi-YUO"/>
                         <outlet property="loginButton" destination="QwL-dV-pOq" id="WM0-DG-Tvh"/>
                         <outlet property="loginTextField" destination="kXf-bi-2qb" id="Ihh-l2-kXN"/>
                         <outlet property="passwordButton" destination="1ey-KV-mzg" id="8Ql-hK-96F"/>
                         <outlet property="passwordTextField" destination="N86-cV-PXl" id="LoQ-x9-Rhz"/>
+                        <outlet property="scrollView" destination="k72-Zd-Dvu" id="upb-ML-KVa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DXc-9p-Ggj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
