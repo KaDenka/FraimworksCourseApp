@@ -194,11 +194,6 @@ class MapViewController: UIViewController {
             showLastRoute()
         }
     }
-    
-    
-    
-    
-    
 }
 
 extension MapViewController: GMSMapViewDelegate {
