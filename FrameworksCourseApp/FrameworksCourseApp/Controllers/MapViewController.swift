@@ -164,8 +164,8 @@ class MapViewController: UIViewController {
         startFlag = false
         guard let routePoints = routePath else { return }
         try! realm.write{
+            guard realmRoutePoints != nil else { return }
             realm.delete(realmRoutePoints)
-           // realm.deleteAll()
         }
         
         for element in 0 ... (routePoints.count() - 1) {

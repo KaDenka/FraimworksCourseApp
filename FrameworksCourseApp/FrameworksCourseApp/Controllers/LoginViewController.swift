@@ -66,11 +66,13 @@ class LoginViewController: UIViewController {
             user.password = password
             
             //Need check realm
-            
-            for realmUser in realmUsers! {
-                print(realmUser)
+            if (realm.object(ofType: User.self, forPrimaryKey: "\(login)") != nil) {
+                router?.toMapViewController()
+            } else {
+                let alert = UIAlertController(title: "No such registered user", message: "Please make the registration", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                self.present(alert, animated: true)
             }
-            router?.toMapViewController()
             
         }
     }
@@ -88,15 +90,20 @@ class LoginViewController: UIViewController {
             user.password = password
             
             //Need add realm checking
-            
-            realm.beginWrite()
-            try! realm.write {
-                realm.add(user)
+            if realm.object(ofType: User.self, forPrimaryKey: "\(login)") != nil {
+                let alert = UIAlertController(title: "Such user had been registered", message: "Please push the login button", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                self.present(alert, animated: true)
+            } else {
+                try! realm.write {
+                    realm.add(user)
+                }
+                router?.toMapViewController()
             }
-            realm.cancelWrite()
-            router?.toMapViewController()
         }
     }
+    
+    
     
     
     @objc private func keyboardShown(_ notification: Notification) {
