@@ -36,7 +36,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         configureMap(locationManager.location?.coordinate ?? coordinates)
         // configureLocationManager()
-       // print("REALM REALM REALM: \(String(describing: Realm.Configuration.defaultConfiguration.fileURL?.path))")
+        print("REALM REALM REALM: \(String(describing: Realm.Configuration.defaultConfiguration.fileURL?.path))")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -164,7 +164,8 @@ class MapViewController: UIViewController {
         startFlag = false
         guard let routePoints = routePath else { return }
         try! realm.write{
-            realm.deleteAll()
+            realm.delete(realmRoutePoints)
+           // realm.deleteAll()
         }
         
         for element in 0 ... (routePoints.count() - 1) {
