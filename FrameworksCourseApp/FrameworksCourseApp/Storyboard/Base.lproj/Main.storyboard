@@ -63,20 +63,19 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.77752596139999997" green="0.86170881990000003" blue="0.91765671969999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
-                                            <constraint firstItem="1ey-KV-mzg" firstAttribute="leading" secondItem="bRd-4s-roZ" secondAttribute="leading" constant="100" id="0kk-Dx-DNd"/>
-                                            <constraint firstAttribute="trailing" secondItem="N86-cV-PXl" secondAttribute="trailing" constant="50" id="6Td-HT-R0f"/>
-                                            <constraint firstAttribute="trailing" secondItem="QwL-dV-pOq" secondAttribute="trailing" constant="100" id="OHK-Ib-qvB"/>
+                                            <constraint firstItem="1ey-KV-mzg" firstAttribute="leading" relation="lessThanOrEqual" secondItem="bRd-4s-roZ" secondAttribute="leading" constant="100" id="0kk-Dx-DNd"/>
+                                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="N86-cV-PXl" secondAttribute="trailing" constant="50" id="6Td-HT-R0f"/>
+                                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="QwL-dV-pOq" secondAttribute="trailing" constant="100" id="OHK-Ib-qvB"/>
                                             <constraint firstItem="1ey-KV-mzg" firstAttribute="top" secondItem="QwL-dV-pOq" secondAttribute="bottom" constant="50" id="Uto-zK-1Xa"/>
                                             <constraint firstItem="N86-cV-PXl" firstAttribute="top" secondItem="kXf-bi-2qb" secondAttribute="bottom" constant="50" id="VZK-ff-Xvi"/>
-                                            <constraint firstAttribute="width" constant="406" id="XVQ-u7-x0v"/>
-                                            <constraint firstItem="kXf-bi-2qb" firstAttribute="leading" secondItem="bRd-4s-roZ" secondAttribute="leading" constant="50" id="YKV-F8-ymS"/>
+                                            <constraint firstItem="kXf-bi-2qb" firstAttribute="leading" relation="lessThanOrEqual" secondItem="bRd-4s-roZ" secondAttribute="leading" constant="50" id="YKV-F8-ymS"/>
                                             <constraint firstItem="kXf-bi-2qb" firstAttribute="top" secondItem="bRd-4s-roZ" secondAttribute="top" constant="200" id="Yns-dR-eNG"/>
                                             <constraint firstItem="QwL-dV-pOq" firstAttribute="top" secondItem="N86-cV-PXl" secondAttribute="bottom" constant="100" id="aTv-rS-wZX"/>
-                                            <constraint firstItem="N86-cV-PXl" firstAttribute="leading" secondItem="bRd-4s-roZ" secondAttribute="leading" constant="50" id="afu-MK-Io9"/>
+                                            <constraint firstItem="N86-cV-PXl" firstAttribute="leading" relation="lessThanOrEqual" secondItem="bRd-4s-roZ" secondAttribute="leading" constant="50" id="afu-MK-Io9"/>
                                             <constraint firstAttribute="height" constant="1200" id="mmY-5t-xA2"/>
-                                            <constraint firstAttribute="trailing" secondItem="1ey-KV-mzg" secondAttribute="trailing" constant="100" id="qpg-nm-rwH"/>
-                                            <constraint firstAttribute="trailing" secondItem="kXf-bi-2qb" secondAttribute="trailing" constant="50" id="xLf-OC-rXf"/>
-                                            <constraint firstItem="QwL-dV-pOq" firstAttribute="leading" secondItem="bRd-4s-roZ" secondAttribute="leading" constant="100" id="yjh-jW-idW"/>
+                                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="1ey-KV-mzg" secondAttribute="trailing" constant="100" id="qpg-nm-rwH"/>
+                                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="kXf-bi-2qb" secondAttribute="trailing" constant="50" id="xLf-OC-rXf"/>
+                                            <constraint firstItem="QwL-dV-pOq" firstAttribute="leading" relation="lessThanOrEqual" secondItem="bRd-4s-roZ" secondAttribute="leading" constant="100" id="yjh-jW-idW"/>
                                         </constraints>
                                     </view>
                                 </subviews>
