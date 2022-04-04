@@ -11,14 +11,21 @@ import CoreLocation
 import RealmSwift
 import Realm
 
+//MARK: -- Markers style enum
+
 enum MarkerSelected {
     case autoMarker
     case manualMarker
 }
+//MARK: -- Controller
 
 class MapViewController: UIViewController {
     
+    //MARK: - Outlets
+    
     @IBOutlet weak var mapView: GMSMapView!
+    
+    //MARK: - Properties
     
     var marker: GMSMarker?
     var manualMarker: GMSMarker?
@@ -32,6 +39,8 @@ class MapViewController: UIViewController {
     let realm = try! Realm()
     var realmRoutePoints: Results<LastRoutePoint>!
     
+    //MARK: - Overrided funcs
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMap(locationManager.location?.coordinate ?? coordinates)
@@ -42,7 +51,10 @@ class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         mapView.delegate = self
         configureLocationManager()
+        addObservers()
     }
+    
+    //MARK: - Funcs
     
     func addMarker(_ markerType: MarkerSelected, _ coordinate: CLLocationCoordinate2D) {
         
@@ -129,6 +141,28 @@ class MapViewController: UIViewController {
         mapView.camera = camera
     }
     
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(blurViewAdd), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(normalViewAdd), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    //MARK: - @objc funcs
+    
+    @objc private func blurViewAdd() {
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.frame
+        blurEffectView.tag = 2
+
+        self.view.addSubview(blurEffectView)
+    }
+    
+    @objc private func normalViewAdd() {
+        self.view.viewWithTag(2)?.removeFromSuperview()
+    }
+    
+    //MARK: - Actions
+    
     @IBAction func createMarkerButton(_ sender: Any) {
         guard let coordinate = locationManager.location?.coordinate else { return }
         
@@ -197,6 +231,8 @@ class MapViewController: UIViewController {
     }
 }
 
+//MARK: -- Extensions
+
 extension MapViewController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         addMarker(.manualMarker, coordinate)
@@ -230,6 +266,7 @@ extension MapViewController: CLLocationManagerDelegate {
         //        mapView.camera = GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 17)
         
     }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }

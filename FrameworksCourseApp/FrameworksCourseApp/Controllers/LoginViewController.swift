@@ -10,6 +10,8 @@ import RealmSwift
 
 class LoginViewController: UIViewController {
     
+    //MARK: -- Outlets
+    
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -17,11 +19,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     
+    //MARK: -- Properties
+    
     var router: LaunchRouter?
     var realmUsers: Results<User>?
     var user = User()
     let realm = try! Realm()
     
+    //MARK: Overrided funcs
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -32,6 +37,8 @@ class LoginViewController: UIViewController {
         contentView.addGestureRecognizer(tapGesture)
         
         
+        
+        configAndSecureTextFields(loginTextField, passwordTextField)
     }
     
     override func viewDidLoad() {
@@ -39,13 +46,19 @@ class LoginViewController: UIViewController {
         addingObservers()
     }
     
+    //MARK: -- Init & Deinit
+    
     deinit {
         removingObservers()
     }
     
+    //MARK: -- Private funcs
+    
     private func addingObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardShown(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(blurViewLoading), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(normalViewLoading), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     private func removingObservers() {
@@ -103,8 +116,19 @@ class LoginViewController: UIViewController {
         }
     }
     
+    private func configAndSecureTextFields(_ loginTextField: UITextField, _ passwordTextField: UITextField) {
+        loginTextField.clearButtonMode = .whileEditing
+        passwordTextField.clearButtonMode = .whileEditing
+        loginTextField.autocorrectionType = .no
+        passwordTextField.autocorrectionType = .no
+        passwordTextField.isSecureTextEntry = true
+        loginTextField.keyboardType = UIKeyboardType.emailAddress
+        passwordTextField.keyboardType = UIKeyboardType.default
+        loginTextField.returnKeyType = .default
+        passwordTextField.returnKeyType = .default
+    }
     
-    
+    //MARK: -- @objc funcs
     
     @objc private func keyboardShown(_ notification: Notification) {
         let userInfo = notification.userInfo
@@ -120,6 +144,22 @@ class LoginViewController: UIViewController {
     @objc private func screenTapped() {
         keyboardHidden()
     }
+    
+    @objc private func blurViewLoading() {
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.frame
+        blurEffectView.tag = 1
+
+        self.view.addSubview(blurEffectView)
+    }
+    
+    @objc private func normalViewLoading() {
+        self.view.viewWithTag(1)?.removeFromSuperview()
+    }
+    
+    //MARK: -- Actions
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         keyboardHidden()
