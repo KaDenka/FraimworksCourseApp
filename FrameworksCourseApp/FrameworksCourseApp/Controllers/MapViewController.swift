@@ -42,6 +42,7 @@ class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         mapView.delegate = self
         configureLocationManager()
+        addObservers()
     }
     
     func addMarker(_ markerType: MarkerSelected, _ coordinate: CLLocationCoordinate2D) {
@@ -127,6 +128,24 @@ class MapViewController: UIViewController {
         let bounds = GMSCoordinateBounds(coordinate: firstPoint, coordinate: lastPoint)
         let camera = mapView.camera(for: bounds, insets: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100))!
         mapView.camera = camera
+    }
+    
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(blurViewAdd), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(normalViewAdd), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    @objc private func blurViewAdd() {
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.frame
+        blurEffectView.tag = 2
+
+        self.view.addSubview(blurEffectView)
+    }
+    
+    @objc private func normalViewAdd() {
+        self.view.viewWithTag(2)?.removeFromSuperview()
     }
     
     @IBAction func createMarkerButton(_ sender: Any) {

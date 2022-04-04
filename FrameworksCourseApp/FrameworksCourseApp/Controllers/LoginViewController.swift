@@ -36,6 +36,8 @@ class LoginViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(screenTapped))
         contentView.addGestureRecognizer(tapGesture)
         
+        
+        
         configAndSecureTextFields(loginTextField, passwordTextField)
     }
     
@@ -55,6 +57,8 @@ class LoginViewController: UIViewController {
     private func addingObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardShown(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(blurViewLoading), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(normalViewLoading), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     private func removingObservers() {
@@ -139,6 +143,20 @@ class LoginViewController: UIViewController {
     
     @objc private func screenTapped() {
         keyboardHidden()
+    }
+    
+    @objc private func blurViewLoading() {
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.frame
+        blurEffectView.tag = 1
+
+        self.view.addSubview(blurEffectView)
+    }
+    
+    @objc private func normalViewLoading() {
+        self.view.viewWithTag(1)?.removeFromSuperview()
     }
     
     //MARK: -- Actions
