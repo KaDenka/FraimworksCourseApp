@@ -7,6 +7,8 @@
 
 import UIKit
 import RealmSwift
+import RxSwift
+import RxCocoa
 
 
 class LoginViewController: UIViewController {
@@ -26,6 +28,7 @@ class LoginViewController: UIViewController {
     var realmUsers: Results<User>?
     var user = User()
     let realm = try! Realm()
+    var disposeBag = DisposeBag()
     
     //MARK: Overrided funcs
     
@@ -45,6 +48,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addingObservers()
+        configureButtons()
     }
     
     //MARK: -- Init & Deinit
@@ -52,6 +56,22 @@ class LoginViewController: UIViewController {
     deinit {
         removingObservers()
     }
+    
+    //MARK: -- RxSwift observable
+    
+    func configureButtons() {
+        Observable
+            .combineLatest(loginTextField.rx.text, passwordTextField.rx.text)
+            .map { login, password in
+                return !(login ?? "").isEmpty && !(password ?? "").isEmpty
+            }
+            .bind { [weak loginButton, weak passwordButton] textFilled in
+                loginButton?.isEnabled = textFilled
+                passwordButton?.isEnabled = textFilled
+            }
+            .disposed(by: disposeBag)
+    }
+    
     
     //MARK: -- Private funcs
     
