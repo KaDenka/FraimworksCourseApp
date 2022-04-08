@@ -10,6 +10,8 @@ import GoogleMaps
 import CoreLocation
 import RealmSwift
 import Realm
+import RxSwift
+import RxCocoa
 
 //MARK: -- Markers style enum
 
@@ -29,28 +31,32 @@ class MapViewController: UIViewController {
     
     var marker: GMSMarker?
     var manualMarker: GMSMarker?
-    var locationManager = CLLocationManager()
+    //var locationManager = CLLocationManager()
     var geoCoder: CLGeocoder?
     var locationsArray = [CLLocationCoordinate2D]()
     var route: GMSPolyline?
     var routePath: GMSMutablePath?
     var startFlag = false
-    var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
+    //  var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
     let realm = try! Realm()
     var realmRoutePoints: Results<LastRoutePoint>!
+    let locationManager = LocationManager()
+    var disposeBag = DisposeBag()
+    
     
     //MARK: - Overrided funcs
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureMap(locationManager.location?.coordinate ?? coordinates)
+        configureMap()
         // configureLocationManager()
+        addLocationManagerObservers()
         print("REALM REALM REALM: \(String(describing: Realm.Configuration.defaultConfiguration.fileURL?.path))")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         mapView.delegate = self
-        configureLocationManager()
+        //        configureLocationManager()
         addObservers()
     }
     
@@ -82,23 +88,35 @@ class MapViewController: UIViewController {
         marker = nil
     }
     
-    func configureMap(_ coordinate: CLLocationCoordinate2D) {
-        let cameraPosition = GMSCameraPosition.camera(withTarget: coordinate, zoom: 17)
-        mapView.camera = cameraPosition
-        mapView.isMyLocationEnabled = true
-        mapView.settings.myLocationButton = true
+    func configureMap() {
+        self.locationManager.location
+            .asObservable()
+            .bind { [weak self] loc in
+                guard let loc = loc else { return }
+                let cameraPosition = GMSCameraPosition.camera(withTarget: loc.coordinate, zoom: 17)
+                self?.mapView.camera = cameraPosition
+                self?.mapView.isMyLocationEnabled = true
+                self?.mapView.settings.myLocationButton = true
+            }
+            .disposed(by: disposeBag)
+//
+//
+//        let cameraPosition = GMSCameraPosition.camera(withTarget: coordinate, zoom: 17)
+//        mapView.camera = cameraPosition
+//        mapView.isMyLocationEnabled = true
+//        mapView.settings.myLocationButton = true
         
     }
     
-    func configureLocationManager() {
-        
-        //locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.startMonitoringSignificantLocationChanges()
-        locationManager.pausesLocationUpdatesAutomatically = false
-    }
+    //    func configureLocationManager() {
+    //
+    //        //locationManager = CLLocationManager()
+    //        locationManager.delegate = self
+    //        locationManager.requestAlwaysAuthorization()
+    //        locationManager.allowsBackgroundLocationUpdates = true
+    //        locationManager.startMonitoringSignificantLocationChanges()
+    //        locationManager.pausesLocationUpdatesAutomatically = false
+    //    }
     
     func makeMapPath(_ points: [CLLocationCoordinate2D]) {
         let routePath = GMSMutablePath()
@@ -141,9 +159,25 @@ class MapViewController: UIViewController {
         mapView.camera = camera
     }
     
+    // MARK: -- Observers making funcs
+    
     private func addObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(blurViewAdd), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(normalViewAdd), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    private func addLocationManagerObservers() {
+        self.locationManager.location
+            .asObservable()
+            .bind { [weak self] observedLocation in
+                guard let observedLocation = observedLocation else { return }
+                self?.routePath?.add(observedLocation.coordinate)
+                self?.route?.path = self?.routePath
+                
+                let position = GMSCameraPosition(target: observedLocation.coordinate, zoom: 17)
+                self?.mapView.animate(to: position)
+            }
+            .disposed(by: disposeBag)
     }
     
     //MARK: - @objc funcs
@@ -153,7 +187,7 @@ class MapViewController: UIViewController {
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.view.frame
         blurEffectView.tag = 2
-
+        
         self.view.addSubview(blurEffectView)
     }
     
@@ -164,10 +198,19 @@ class MapViewController: UIViewController {
     //MARK: - Actions
     
     @IBAction func createMarkerButton(_ sender: Any) {
-        guard let coordinate = locationManager.location?.coordinate else { return }
+        self.locationManager.location
+            .asObservable()
+            .bind { [weak self] loc in
+                guard let loc = loc else { return }
+                let coord = loc.coordinate
+                self?.addMarker(.autoMarker, coord)
+            }
+            .disposed(by: disposeBag)
         
+//        guard let coordinate = self.locationManager.location.coordinate as CLLocationCoordinate2D else { return }
+//
         //    marker == nil ? addMarker(coordinates) : removeMarker()
-        addMarker(.autoMarker, coordinate)
+      //  addMarker(.autoMarker, coordinate)
         //locationManager.stopUpdatingLocation()
         
     }
@@ -175,25 +218,32 @@ class MapViewController: UIViewController {
     
     @IBAction func updateLocationButton(_ sender: Any) {
         //locationManager.requestLocation()
-        mapView.camera = GMSCameraPosition(target: locationManager.location!.coordinate, zoom: 17)
-        
+        self.locationManager.location
+            .asObservable()
+            .bind { [weak self] loc in
+                guard let loc = loc else { return }
+                self?.mapView.camera = GMSCameraPosition(target: loc.coordinate, zoom: 17)
+                
+            }
+            .disposed(by: disposeBag)
+     
     }
     
     
     @IBAction func didTapStartRouteButton(_ sender: UIButton) {
-        locationManager.requestLocation()
+        locationManager.manager.requestLocation()
         route?.map = nil
         removeMarker()
         route = GMSPolyline()
         configureRouteLine(route!)
         routePath = GMSMutablePath()
         route?.map = mapView
-        locationManager.startUpdatingLocation()
+        locationManager.manager.startUpdatingLocation()
         startFlag = true
     }
     
     @IBAction func didTapStopRouteButton(_ sender: UIButton) {
-        locationManager.stopUpdatingLocation()
+        self.locationManager.manager.stopUpdatingLocation()
         route?.map = nil
         startFlag = false
         guard let routePoints = routePath else { return }
@@ -219,7 +269,8 @@ class MapViewController: UIViewController {
         if startFlag == true {
             let alert = UIAlertController(title: "Warning!", message: "The route is making now. If you'll press OK all data of this route will be lost", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                self.locationManager.stopUpdatingLocation()
+                self.locationManager.manager.stopUpdatingLocation()
+                // self.locationManager.stopUpdatingLocation()
                 self.route?.map = nil
                 self.startFlag = false
                 self.showLastRoute()
@@ -240,35 +291,35 @@ extension MapViewController: GMSMapViewDelegate {
     
 }
 
-extension MapViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //print(locations)
-        
-        guard let location = locations.last else { return }
-        
-        routePath?.add(location.coordinate)
-        route?.path = routePath
-        
-        let position = GMSCameraPosition(target: location.coordinate, zoom: 17)
-        mapView.animate(to: position)
-        
-        
-        
-        
-        //        if geoCoder == nil {
-        //            geoCoder = CLGeocoder()
-        //        }
-        //        geoCoder?.reverseGeocodeLocation(location) { places, error in
-        //            print(places?.first)
-        //        }
-        
-        //configureMap(location.coordinate)
-        //        mapView.camera = GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 17)
-        
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
-    }
-}
+//extension MapViewController: CLLocationManagerDelegate {
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        //print(locations)
+//
+//        guard let location = locations.last else { return }
+//
+//        routePath?.add(location.coordinate)
+//        route?.path = routePath
+//
+//        let position = GMSCameraPosition(target: location.coordinate, zoom: 17)
+//        mapView.animate(to: position)
+//
+//
+//
+//
+//        //        if geoCoder == nil {
+//        //            geoCoder = CLGeocoder()
+//        //        }
+//        //        geoCoder?.reverseGeocodeLocation(location) { places, error in
+//        //            print(places?.first)
+//        //        }
+//
+//        //configureMap(location.coordinate)
+//        //        mapView.camera = GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 17)
+//
+//    }
+//
+//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+//        print(error)
+//    }
+//}
 

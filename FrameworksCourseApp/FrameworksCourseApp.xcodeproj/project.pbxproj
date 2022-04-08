@@ -23,6 +23,7 @@
 		CAE6143627EAFA7A00D9F529 /* LastRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6143527EAFA7A00D9F529 /* LastRoutePoint.swift */; };
 		CAE6F4A827F1A72D000198DB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F4A727F1A72D000198DB /* User.swift */; };
 		CAE6F4AA27F1C2A1000198DB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F4A927F1C2A1000198DB /* LoginViewController.swift */; };
+		CAF692ED280012D8002CA9B2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF692EC280012D8002CA9B2 /* LocationManager.swift */; };
 		FDC7A51D4E181EED83DCAD38 /* Pods_FrameworksCourseApp_FrameworksCourseAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2727ADFD1683EE6AF222582 /* Pods_FrameworksCourseApp_FrameworksCourseAppUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,7 @@
 		CAE6143527EAFA7A00D9F529 /* LastRoutePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastRoutePoint.swift; sourceTree = "<group>"; };
 		CAE6F4A727F1A72D000198DB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CAE6F4A927F1C2A1000198DB /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		CAF692EC280012D8002CA9B2 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		F3CF2A5D27B7F2DC0EB822E6 /* Pods_FrameworksCourseApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FrameworksCourseApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -147,11 +149,12 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		CA00A58927DB7064008894E4 /* Extensions */ = {
+		CA00A58927DB7064008894E4 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				CAF692EC280012D8002CA9B2 /* LocationManager.swift */,
 			);
-			path = Extensions;
+			path = Location;
 			sourceTree = "<group>";
 		};
 		CA45070227F300F500DD760F /* Navigation */ = {
@@ -197,7 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				CA45070227F300F500DD760F /* Navigation */,
-				CA00A58927DB7064008894E4 /* Extensions */,
+				CA00A58927DB7064008894E4 /* Location */,
 				CA00A58327DB37B1008894E4 /* App */,
 				CA00A58627DB37F2008894E4 /* Models */,
 				CA00A58427DB37C1008894E4 /* Controllers */,
@@ -521,6 +524,7 @@
 				CA8EA4F627D9D90900E23117 /* SceneDelegate.swift in Sources */,
 				CAE6F4A827F1A72D000198DB /* User.swift in Sources */,
 				CAE6143627EAFA7A00D9F529 /* LastRoutePoint.swift in Sources */,
+				CAF692ED280012D8002CA9B2 /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
