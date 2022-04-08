@@ -9,6 +9,8 @@ target 'FrameworksCourseApp' do
 
   pod 'GoogleMaps'
   pod 'RealmSwift'
+  pod 'RxSwift'
+  pod 'RxCocoa'
 
   target 'FrameworksCourseAppTests' do
     inherit! :search_paths
