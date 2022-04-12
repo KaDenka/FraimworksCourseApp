@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyB2qMiCgbUGU_LIiAS7tjltBn3_FoIFJsc")
         
         let config = Realm.Configuration(
-            schemaVersion: 4,  migrationBlock: { migration, oldSchemaVersion in
+            schemaVersion: 5,  migrationBlock: { migration, oldSchemaVersion in
                 if (oldSchemaVersion < 1) {}
             })
         Realm.Configuration.defaultConfiguration = config
