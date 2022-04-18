@@ -9,6 +9,7 @@ import UIKit
 import GoogleMaps
 import RealmSwift
 import SwiftUI
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,12 +20,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyB2qMiCgbUGU_LIiAS7tjltBn3_FoIFJsc")
         
         let config = Realm.Configuration(
-            schemaVersion: 5,  migrationBlock: { migration, oldSchemaVersion in
+            schemaVersion: 6,  migrationBlock: { migration, oldSchemaVersion in
                 if (oldSchemaVersion < 1) {}
             })
         Realm.Configuration.defaultConfiguration = config
         
+        //MARK: -- Local Notification
+        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            guard granted else { return }
+            self.sendNotificationRequest(content: self.makeNotificationContent(), trigger: self.makeIntervalNotificationTrigger())
+            
+        }
+        
         return true
+    }
+    
+    //MARK: Notifications Funcs
+    
+    func makeNotificationContent() -> UNNotificationContent {
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Don't forget about Your App"
+        content.subtitle = "Need to enter to Your App"
+        content.body = "It's time to make some routes!"
+        content.badge = 1
+        
+        return content
+    }
+    
+    func makeIntervalNotificationTrigger() -> UNNotificationTrigger {
+        
+        return UNTimeIntervalNotificationTrigger(timeInterval: 1800, repeats: true)
+    }
+    
+    func sendNotificationRequest(content: UNNotificationContent, trigger: UNNotificationTrigger) {
+        
+        let request = UNNotificationRequest(identifier: "appAlarm", content: content, trigger: trigger)
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     // MARK: UISceneSession Lifecycle
