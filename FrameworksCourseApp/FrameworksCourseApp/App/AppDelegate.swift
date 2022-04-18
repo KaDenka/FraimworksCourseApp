@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func makeIntervalNotificationTrigger() -> UNNotificationTrigger {
         
-        return UNTimeIntervalNotificationTrigger(timeInterval: 70, repeats: true)
+        return UNTimeIntervalNotificationTrigger(timeInterval: 1800, repeats: true)
     }
     
     func sendNotificationRequest(content: UNNotificationContent, trigger: UNNotificationTrigger) {
