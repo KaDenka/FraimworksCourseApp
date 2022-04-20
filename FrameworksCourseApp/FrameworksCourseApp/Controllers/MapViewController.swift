@@ -12,6 +12,7 @@ import RealmSwift
 import Realm
 import RxSwift
 import RxCocoa
+import AVFoundation
 
 //MARK: -- Markers style enum
 
@@ -280,6 +281,16 @@ class MapViewController: UIViewController {
             showLastRoute()
         }
     }
+    
+    @IBAction func makePhotoButtonDidTapped(_ sender: UIButton) {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
+        imagePickerController.delegate = self
+        
+        present(imagePickerController, animated: true)
+    }
 }
 
 //MARK: -- Extensions
@@ -289,6 +300,31 @@ extension MapViewController: GMSMapViewDelegate {
         addMarker(.manualMarker, coordinate)
     }
     
+}
+
+extension MapViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = extractImage(from: info)
+        
+        //TODO: Change the function to load and save to Realm
+        print(image!)
+        
+        picker.dismiss(animated: true)
+    }
+    
+    private func extractImage(from info: [String: Any]) -> UIImage? {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            return image
+        } else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            return image
+        } else {
+            return nil
+        }
+    }
 }
 
 //extension MapViewController: CLLocationManagerDelegate {

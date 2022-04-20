@@ -194,6 +194,20 @@
                                     <action selector="updateLocationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6bM-v7-EXc"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7y-BW-lzC">
+                                <rect key="frame" x="294" y="709" width="100" height="31"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Make photo" cornerStyle="capsule">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="makePhotoButtonDidTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qT3-KM-xpp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -203,7 +217,9 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="YRY-8J-pp3" secondAttribute="trailing" id="EmD-me-Bky"/>
                             <constraint firstItem="YRY-8J-pp3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GiE-HG-KgR"/>
                             <constraint firstItem="YRY-8J-pp3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Jiu-AF-WSV"/>
+                            <constraint firstItem="x6B-n3-xWI" firstAttribute="top" secondItem="a7y-BW-lzC" secondAttribute="bottom" constant="20" id="Nbd-WW-hPz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="QlQ-Mi-i3S" secondAttribute="bottom" constant="20" id="OdW-m1-fht"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="a7y-BW-lzC" secondAttribute="trailing" constant="20" id="Rt4-m9-sDo"/>
                             <constraint firstItem="2o7-cM-8wP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="a0m-FJ-Fhf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="x6B-n3-xWI" secondAttribute="trailing" constant="20" id="dFa-YK-Tq2"/>
                             <constraint firstItem="QlQ-Mi-i3S" firstAttribute="top" secondItem="x6B-n3-xWI" secondAttribute="bottom" constant="20" id="hHr-vW-gwO"/>
@@ -233,6 +249,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
