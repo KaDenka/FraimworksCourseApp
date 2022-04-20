@@ -32,17 +32,20 @@ class MapViewController: UIViewController {
     
     var marker: GMSMarker?
     var manualMarker: GMSMarker?
-    //var locationManager = CLLocationManager()
     var geoCoder: CLGeocoder?
     var locationsArray = [CLLocationCoordinate2D]()
     var route: GMSPolyline?
     var routePath: GMSMutablePath?
     var startFlag = false
-    //  var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
-    let realm = try! Realm()
     var realmRoutePoints: Results<LastRoutePoint>!
-    let locationManager = LocationManager()
     var disposeBag = DisposeBag()
+    var onTakePicture: ((UIImage) -> Void)?
+    //  var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
+    //var locationManager = CLLocationManager()
+    
+    let realm = try! Realm()
+    let locationManager = LocationManager()
+    //let router: LaunchRouter?
     
     
     //MARK: - Overrided funcs
@@ -308,18 +311,18 @@ extension MapViewController: UINavigationControllerDelegate, UIImagePickerContro
     }
     
     private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let image = extractImage(from: info)
         
-        //TODO: Change the function to load and save to Realm
-        print(image!)
+        picker.dismiss(animated: true) { [weak self] in
         
-        picker.dismiss(animated: true)
+            guard let image = self?.extractImage(from: info) else { return }
+            self?.onTakePicture?(image)
+        }
     }
     
     private func extractImage(from info: [String: Any]) -> UIImage? {
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+        if let image = info[UIImagePickerController.InfoKey.editedImage.rawValue] as? UIImage {
             return image
-        } else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        } else if let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage {
             return image
         } else {
             return nil

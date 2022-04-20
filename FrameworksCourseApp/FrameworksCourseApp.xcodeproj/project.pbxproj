@@ -11,6 +11,7 @@
 		6A6556AD91D88B513D724DF5 /* Pods_FrameworksCourseAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F0C17FFC863B7BEB14E8308 /* Pods_FrameworksCourseAppTests.framework */; };
 		CA45070527F3011100DD760F /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA45070427F3011100DD760F /* Router.swift */; };
 		CA45070727F303A900DD760F /* LaunchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA45070627F303A900DD760F /* LaunchRouter.swift */; };
+		CA678B06281052060075D047 /* SelfieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA678B05281052060075D047 /* SelfieViewController.swift */; };
 		CA8EA4F427D9D90900E23117 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA4F327D9D90900E23117 /* AppDelegate.swift */; };
 		CA8EA4F627D9D90900E23117 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA4F527D9D90900E23117 /* SceneDelegate.swift */; };
 		CA8EA4F827D9D90900E23117 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA4F727D9D90900E23117 /* MapViewController.swift */; };
@@ -55,6 +56,7 @@
 		B38F0832056F9AA12DEF354C /* Pods-FrameworksCourseApp-FrameworksCourseAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FrameworksCourseApp-FrameworksCourseAppUITests.release.xcconfig"; path = "Target Support Files/Pods-FrameworksCourseApp-FrameworksCourseAppUITests/Pods-FrameworksCourseApp-FrameworksCourseAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CA45070427F3011100DD760F /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		CA45070627F303A900DD760F /* LaunchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchRouter.swift; sourceTree = "<group>"; };
+		CA678B05281052060075D047 /* SelfieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieViewController.swift; sourceTree = "<group>"; };
 		CA8EA4F027D9D90900E23117 /* FrameworksCourseApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrameworksCourseApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA8EA4F327D9D90900E23117 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA8EA4F527D9D90900E23117 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				CA8EA4F727D9D90900E23117 /* MapViewController.swift */,
 				CAE6F4A927F1C2A1000198DB /* LoginViewController.swift */,
+				CA678B05281052060075D047 /* SelfieViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				CA8EA4F627D9D90900E23117 /* SceneDelegate.swift in Sources */,
 				CAE6F4A827F1A72D000198DB /* User.swift in Sources */,
 				CAE6143627EAFA7A00D9F529 /* LastRoutePoint.swift in Sources */,
+				CA678B06281052060075D047 /* SelfieViewController.swift in Sources */,
 				CAF692ED280012D8002CA9B2 /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
