@@ -21,6 +21,7 @@
 		CA8EA50B27D9D90B00E23117 /* FrameworksCourseAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA50A27D9D90B00E23117 /* FrameworksCourseAppTests.swift */; };
 		CA8EA51527D9D90B00E23117 /* FrameworksCourseAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA51427D9D90B00E23117 /* FrameworksCourseAppUITests.swift */; };
 		CA8EA51727D9D90B00E23117 /* FrameworksCourseAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8EA51627D9D90B00E23117 /* FrameworksCourseAppUITestsLaunchTests.swift */; };
+		CACAA01F2812A7CD0036E474 /* PhotoMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACAA01E2812A7CD0036E474 /* PhotoMarker.swift */; };
 		CAE6143627EAFA7A00D9F529 /* LastRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6143527EAFA7A00D9F529 /* LastRoutePoint.swift */; };
 		CAE6F4A827F1A72D000198DB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F4A727F1A72D000198DB /* User.swift */; };
 		CAE6F4AA27F1C2A1000198DB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F4A927F1C2A1000198DB /* LoginViewController.swift */; };
@@ -70,6 +71,7 @@
 		CA8EA51027D9D90B00E23117 /* FrameworksCourseAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FrameworksCourseAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA8EA51427D9D90B00E23117 /* FrameworksCourseAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworksCourseAppUITests.swift; sourceTree = "<group>"; };
 		CA8EA51627D9D90B00E23117 /* FrameworksCourseAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworksCourseAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CACAA01E2812A7CD0036E474 /* PhotoMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMarker.swift; sourceTree = "<group>"; };
 		CAE6143527EAFA7A00D9F529 /* LastRoutePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastRoutePoint.swift; sourceTree = "<group>"; };
 		CAE6F4A727F1A72D000198DB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CAE6F4A927F1C2A1000198DB /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			children = (
 				CAE6143527EAFA7A00D9F529 /* LastRoutePoint.swift */,
 				CAE6F4A727F1A72D000198DB /* User.swift */,
+				CACAA01E2812A7CD0036E474 /* PhotoMarker.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAE6F4AA27F1C2A1000198DB /* LoginViewController.swift in Sources */,
+				CACAA01F2812A7CD0036E474 /* PhotoMarker.swift in Sources */,
 				CA45070727F303A900DD760F /* LaunchRouter.swift in Sources */,
 				CA45070527F3011100DD760F /* Router.swift in Sources */,
 				CA8EA4F827D9D90900E23117 /* MapViewController.swift in Sources */,
@@ -635,7 +639,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -690,7 +694,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
