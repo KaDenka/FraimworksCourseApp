@@ -40,6 +40,8 @@ class MapViewController: UIViewController {
     var realmRoutePoints: Results<LastRoutePoint>!
     var disposeBag = DisposeBag()
     var onTakePicture: ((UIImage) -> Void)?
+    var realmPhotoMarker: Results<PhotoMarker>!
+    var photoMarker = PhotoMarker()
     //  var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
     //var locationManager = CLLocationManager()
     
@@ -80,7 +82,7 @@ class MapViewController: UIViewController {
             
         case .manualMarker:
             manualMarker = GMSMarker(position: coordinate)
-            manualMarker?.icon = GMSMarker.markerImage(with: .systemGreen)
+            manualMarker?.icon = GMSMarker.markerImage(with: .green)
             manualMarker?.title = "Manual Position"
             manualMarker?.snippet = "Actual selected manual marker"
             manualMarker?.map = mapView
@@ -318,6 +320,7 @@ extension MapViewController: UINavigationControllerDelegate, UIImagePickerContro
         
             guard let image = self?.extractImage(from: info) else { return }
             self?.onTakePicture?(image)
+            
         }
     }
     
