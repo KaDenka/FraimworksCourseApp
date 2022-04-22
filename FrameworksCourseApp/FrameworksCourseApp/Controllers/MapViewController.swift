@@ -321,6 +321,12 @@ extension MapViewController: UINavigationControllerDelegate, UIImagePickerContro
             guard let image = self?.extractImage(from: info) else { return }
             self?.onTakePicture?(image)
             
+            self?.photoMarker.photo = image
+            guard let photoMarker = self?.photoMarker, let realm = self?.realm else { return }
+                    
+            try! realm.write {
+                realm.add(photoMarker)
+            }
         }
     }
     
