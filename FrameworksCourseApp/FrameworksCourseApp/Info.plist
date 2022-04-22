@@ -21,6 +21,8 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Use camera for selfie</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Please Enable</string>
 	<key>UIBackgroundModes</key>

@@ -12,6 +12,7 @@ import RealmSwift
 import Realm
 import RxSwift
 import RxCocoa
+import AVFoundation
 
 //MARK: -- Markers style enum
 
@@ -31,17 +32,22 @@ class MapViewController: UIViewController {
     
     var marker: GMSMarker?
     var manualMarker: GMSMarker?
-    //var locationManager = CLLocationManager()
     var geoCoder: CLGeocoder?
     var locationsArray = [CLLocationCoordinate2D]()
     var route: GMSPolyline?
     var routePath: GMSMutablePath?
     var startFlag = false
-    //  var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
-    let realm = try! Realm()
     var realmRoutePoints: Results<LastRoutePoint>!
-    let locationManager = LocationManager()
     var disposeBag = DisposeBag()
+    var onTakePicture: ((UIImage) -> Void)?
+    var realmPhotoMarker: Results<PhotoMarker>!
+    var photoMarker = PhotoMarker()
+    //  var coordinates = CLLocationCoordinate2D(latitude: 55.7282982, longitude: 37.5779991)
+    //var locationManager = CLLocationManager()
+    
+    let realm = try! Realm()
+    let locationManager = LocationManager()
+    //let router: LaunchRouter?
     
     
     //MARK: - Overrided funcs
@@ -76,7 +82,7 @@ class MapViewController: UIViewController {
             
         case .manualMarker:
             manualMarker = GMSMarker(position: coordinate)
-            manualMarker?.icon = GMSMarker.markerImage(with: .systemGreen)
+            manualMarker?.icon = GMSMarker.markerImage(with: .green)
             manualMarker?.title = "Manual Position"
             manualMarker?.snippet = "Actual selected manual marker"
             manualMarker?.map = mapView
@@ -158,6 +164,8 @@ class MapViewController: UIViewController {
         let camera = mapView.camera(for: bounds, insets: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100))!
         mapView.camera = camera
     }
+    
+    
     
     // MARK: -- Observers making funcs
     
@@ -280,6 +288,16 @@ class MapViewController: UIViewController {
             showLastRoute()
         }
     }
+    
+    @IBAction func makePhotoButtonDidTapped(_ sender: UIButton) {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
+        imagePickerController.delegate = self
+        
+        present(imagePickerController, animated: true)
+    }
 }
 
 //MARK: -- Extensions
@@ -289,6 +307,38 @@ extension MapViewController: GMSMapViewDelegate {
         addMarker(.manualMarker, coordinate)
     }
     
+}
+
+extension MapViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        picker.dismiss(animated: true) { [weak self] in
+        
+            guard let image = self?.extractImage(from: info) else { return }
+            self?.onTakePicture?(image)
+            
+            self?.photoMarker.photo = image
+            guard let photoMarker = self?.photoMarker, let realm = self?.realm else { return }
+                    
+            try! realm.write {
+                realm.add(photoMarker)
+            }
+        }
+    }
+    
+    private func extractImage(from info: [String: Any]) -> UIImage? {
+        if let image = info[UIImagePickerController.InfoKey.editedImage.rawValue] as? UIImage {
+            return image
+        } else if let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage {
+            return image
+        } else {
+            return nil
+        }
+    }
 }
 
 //extension MapViewController: CLLocationManagerDelegate {
